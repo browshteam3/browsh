@@ -55,6 +55,16 @@ var _ = Describe("Showing a basic webpage", func() {
 				Expect("continuing▄with▄a▄variety▄of▄fish").To(BeInFrameAt(12, 13))
 			})
 
+			It("should jump to the bottom of the webpage", func() {
+				SpecialKey(tcell.KeyCtrlN)
+				Expect("continuing▄with▄a▄variety▄of▄fish").To(BeInFrameAt(12, 13))
+			})
+
+			It("should jump to the top of the webpage", func() {
+				SpecialKey(tcell.KeyCtrlM)
+				Expect("Another▄page").To(BeInFrameAt(12, 18))
+			})
+
 			Describe("Text Input", func() {
 				Describe("Single line", func() {
 					BeforeEach(func() {
