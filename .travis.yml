@@ -44,7 +44,7 @@ script:
 - sed -i 's/command-line-arguments/browsh\/interfacer\/test\/tty/g' coverage2.out
 - cd $REPO_ROOT/interfacer && go test -coverprofile=coverage3.out test/http-server/*.go -v -ginkgo.slowSpecThreshold=30
   -ginkgo.flakeAttempts=3
-- sed -i 's/command-line-arguments/browsh\/interfacer\/test\/https-server/g' coverage3.out
+- sed -i 's/command-line-arguments/browsh\/interfacer\/test\/http-server/g' coverage3.out
 - cd $REPO_ROOT && sonar-scanner
 after_failure:
 - cat $REPO_ROOT/interfacer/test/tty/debug.log
