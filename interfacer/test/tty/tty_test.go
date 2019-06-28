@@ -56,12 +56,12 @@ var _ = Describe("Showing a basic webpage", func() {
 			})
 
 			It("should jump to the bottom of the webpage", func() {
-				SpecialKey(tcell.KeyCtrlN)
+				SpecialKey(tcell.KeyCtrlM)
 				Expect("continuing▄with▄a▄variety▄of▄fish").To(BeInFrameAt(12, 13))
 			})
 
 			It("should jump to the top of the webpage", func() {
-				SpecialKey(tcell.KeyCtrlM)
+				SpecialKey(tcell.KeyCtrlN)
 				Expect("Another▄page").To(BeInFrameAt(12, 18))
 			})
 
