@@ -75,6 +75,23 @@ var _ = Describe("Showing a basic webpage", func() {
 				Expect("Introduction").To(BeInFrameAt(21, 0))
 			})
 
+			It("should go back one page using browser history", func() {
+				SpecialKey(tcell.KeyCtrlL)
+				Keyboard(testSiteURL + "/smorgasbord/another.html")
+				SpecialKey(tcell.KeyEnter)
+				SpecialKey(tcell.KeyBackspace)
+				Expect(testSiteURL + "/smorgasbord/").To(BeInFrameAt(0, 1))
+			})
+
+			It("should go forward one page using browser history", func() {
+				SpecialKey(tcell.KeyCtrlL)
+				Keyboard(testSiteURL + "/smorgasbord/another.html")
+				SpecialKey(tcell.KeyEnter)
+				SpecialKey(tcell.KeyBackspace)
+				SpecialKey(tcell.KeyCtrlF)
+				Expect(testSiteURL + "/smorgasbord/another.html").To(BeInFrameAt(0, 1))
+			})
+
 			Describe("Text Input", func() {
 				Describe("Single line", func() {
 					BeforeEach(func() {
