@@ -55,6 +55,26 @@ var _ = Describe("Showing a basic webpage", func() {
 				Expect("continuing▄with▄a▄variety▄of▄fish").To(BeInFrameAt(12, 13))
 			})
 
+			It("should jump to the bottom of the webpage", func() {
+				SpecialKey(tcell.KeyUp)
+				SpecialKey(tcell.KeyUp)
+				SpecialKey(tcell.KeyCtrlM)
+				Expect("continuing▄with▄a▄variety▄of▄fish").To(BeInFrameAt(12, 13))
+			})
+
+			It("should jump to the top of the webpage", func() {
+				SpecialKey(tcell.KeyDown)
+				SpecialKey(tcell.KeyDown)
+				SpecialKey(tcell.KeyCtrlN)
+				Expect("Another▄page").To(BeInFrameAt(12, 18))
+			})
+
+			It("should open the help webpage", func() {
+				SpecialKey(tcell.KeyF1)
+				Expect("https://www.brow.sh/docs/introduction/").To(BeInFrameAt(0, 1))
+				Expect("Introduction").To(BeInFrameAt(21, 0))
+			})
+
 			Describe("Text Input", func() {
 				Describe("Single line", func() {
 					BeforeEach(func() {

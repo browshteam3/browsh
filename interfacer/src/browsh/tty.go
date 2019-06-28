@@ -155,6 +155,13 @@ func handleScrolling(ev *tcell.EventKey) {
 	if ev.Key() == tcell.KeyPgDn {
 		CurrentTab.frame.yScroll += height
 	}
+	if ev.Key() == tcell.KeyCtrlM {
+		CurrentTab.frame.yScroll = CurrentTab.frame.domRowCount() - height
+	}
+	if ev.Key() == tcell.KeyCtrlN {
+		CurrentTab.frame.yScroll = 0
+	}
+
 	CurrentTab.frame.limitScroll(height)
 	sendMessageToWebExtension(
 		fmt.Sprintf(
