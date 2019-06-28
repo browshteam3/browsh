@@ -71,6 +71,10 @@ func handleUserKeyPress(ev *tcell.EventKey) {
 		if activeInputBox == nil {
 			sendMessageToWebExtension("/tab_command,/history_back")
 		}
+	case tcell.KeyCtrlF:
+		if activeInputBox == nil {
+			sendMessageToWebExtension("/tab_command,/history_forward")
+		}
 	}
 	if ev.Rune() == 'm' && ev.Modifiers() == 4 {
 		toggleMonochromeMode()
