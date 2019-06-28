@@ -34,12 +34,17 @@ install:
 - diff -u <(echo -n) <(gofmt -d ./)
 - ./node_modules/.bin/prettier --list-different "{src,test}/**/*.js"
 script:
+- echo $REPO_ROOT
+- echo $GOPATH
 - cd $REPO_ROOT/webext && npm test
 - cd $REPO_ROOT/interfacer && go test -coverprofile=coverage1.out $(find src/browsh -name *.go | grep -v windows)
+- cat coverage1.out
 - cd $REPO_ROOT/interfacer && go test -coverprofile=coverage2.out test/tty/*.go -v -ginkgo.slowSpecThreshold=30
   -ginkgo.flakeAttempts=3
+- cat coverage2.out
 - cd $REPO_ROOT/interfacer && go test -coverprofile=coverage3.out test/http-server/*.go -v -ginkgo.slowSpecThreshold=30
   -ginkgo.flakeAttempts=3
+- cat coverage3.out
 - cd $REPO_ROOT && sonar-scanner
 after_failure:
 - cat $REPO_ROOT/interfacer/test/tty/debug.log
