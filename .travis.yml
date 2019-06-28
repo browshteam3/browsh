@@ -35,10 +35,10 @@ install:
 - ./node_modules/.bin/prettier --list-different "{src,test}/**/*.js"
 script:
 - cd $REPO_ROOT/webext && npm test
-- cd $REPO_ROOT/interfacer && go test $(find src/browsh -name *.go | grep -v windows)
-- cd $REPO_ROOT/interfacer && go test test/tty/*.go -v -ginkgo.slowSpecThreshold=30
+- cd $REPO_ROOT/interfacer && go test -coverprofile=coverage1.out $(find src/browsh -name *.go | grep -v windows)
+- cd $REPO_ROOT/interfacer && go test -coverprofile=coverage2.out test/tty/*.go -v -ginkgo.slowSpecThreshold=30
   -ginkgo.flakeAttempts=3
-- cd $REPO_ROOT/interfacer && go test test/http-server/*.go -v -ginkgo.slowSpecThreshold=30
+- cd $REPO_ROOT/interfacer && go test -coverprofile=coverage3.out test/http-server/*.go -v -ginkgo.slowSpecThreshold=30
   -ginkgo.flakeAttempts=3
 - cd $REPO_ROOT && sonar-scanner
 after_failure:
