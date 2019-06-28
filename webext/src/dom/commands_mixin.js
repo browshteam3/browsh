@@ -40,6 +40,9 @@ export default MixinBase =>
         case "/history_back":
           history.go(-1);
           break;
+        case "/history_forward":
+          history.go(1);
+          break;
         case "/window_stop":
           window.stop();
           break;

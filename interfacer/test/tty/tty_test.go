@@ -56,13 +56,40 @@ var _ = Describe("Showing a basic webpage", func() {
 			})
 
 			It("should jump to the bottom of the webpage", func() {
+				SpecialKey(tcell.KeyUp)
+				SpecialKey(tcell.KeyUp)
 				SpecialKey(tcell.KeyCtrlM)
 				Expect("continuing▄with▄a▄variety▄of▄fish").To(BeInFrameAt(12, 13))
 			})
 
 			It("should jump to the top of the webpage", func() {
+				SpecialKey(tcell.KeyDown)
+				SpecialKey(tcell.KeyDown)
 				SpecialKey(tcell.KeyCtrlN)
 				Expect("Another▄page").To(BeInFrameAt(12, 18))
+			})
+
+			It("should open the help webpage", func() {
+				SpecialKey(tcell.KeyF1)
+				Expect("https://www.brow.sh/docs/introduction/").To(BeInFrameAt(0, 1))
+				Expect("Introduction").To(BeInFrameAt(21, 0))
+			})
+
+			It("should go back one page using browser history", func() {
+				SpecialKey(tcell.KeyCtrlL)
+				Keyboard(testSiteURL + "/smorgasbord/another.html")
+				SpecialKey(tcell.KeyEnter)
+				SpecialKey(tcell.KeyBackspace)
+				Expect(testSiteURL + "/smorgasbord/").To(BeInFrameAt(0, 1))
+			})
+
+			It("should go forward one page using browser history", func() {
+				SpecialKey(tcell.KeyCtrlL)
+				Keyboard(testSiteURL + "/smorgasbord/another.html")
+				SpecialKey(tcell.KeyEnter)
+				SpecialKey(tcell.KeyBackspace)
+				SpecialKey(tcell.KeyCtrlF)
+				Expect(testSiteURL + "/smorgasbord/another.html").To(BeInFrameAt(0, 1))
 			})
 
 			Describe("Text Input", func() {
