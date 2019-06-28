@@ -165,6 +165,7 @@ func handleScrolling(ev *tcell.EventKey) {
 	if ev.Key() == tcell.KeyCtrlN {
 		CurrentTab.frame.yScroll = 0
 	}
+
 	CurrentTab.frame.limitScroll(height)
 	sendMessageToWebExtension(
 		fmt.Sprintf(
@@ -233,7 +234,6 @@ func handleTTYResize() {
 // that have changed.
 func renderCurrentTabWindow() {
 	var currentCell cell
-	var styling = tcell.StyleDefault
 	var runeChars []rune
 	width, height := screen.Size()
 	if CurrentTab == nil || CurrentTab.frame.cells == nil {
@@ -248,17 +248,10 @@ func renderCurrentTabWindow() {
 			if len(runeChars) == 0 {
 				continue
 			}
-			if IsMonochromeMode {
-				styling = styling.Foreground(tcell.ColorWhite)
-				styling = styling.Background(tcell.ColorBlack)
-				if runeChars[0] == '▄' {
-					runeChars[0] = ' '
-				}
-			} else {
-				styling = styling.Foreground(currentCell.fgColour)
-				styling = styling.Background(currentCell.bgColour)
+			if IsMonochromeMode && runeChars[0] == '▄' {
+				runeChars[0] = ' '
 			}
-			screen.SetCell(x, y+uiHeight, styling, runeChars[0])
+			screen.SetCell(x, y+uiHeight, getStyling(currentCell), runeChars[0])
 		}
 	}
 	if activeInputBox != nil {
@@ -267,6 +260,18 @@ func renderCurrentTabWindow() {
 	overlayPageStatusMessage()
 	overlayCallToSupport()
 	screen.Show()
+}
+
+func getStyling(currentCell cell) tcell.Style {
+	var styling = tcell.StyleDefault
+	if IsMonochromeMode {
+		styling = styling.Foreground(tcell.ColorWhite)
+		styling = styling.Background(tcell.ColorBlack)
+	} else {
+		styling = styling.Foreground(currentCell.fgColour)
+		styling = styling.Background(currentCell.bgColour)
+	}
+	return styling
 }
 
 func getCell(x, y int) cell {
